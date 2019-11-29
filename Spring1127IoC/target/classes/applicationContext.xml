@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:c="http://www.springframework.org/schema/c"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.1.xsd">
+
+<!-- java.lang.String 클래스의 bean을 생성자에서 주입받는 형태로 만들기 -->
+<bean id="string" class="java.lang.String" c:_0="한라봉" />
+<!--  
+<bean id="string" class="java.lang.String">
+	<constructor-arg>
+		<value>감귤</value>
+	</constructor-arg>
+</bean>
+-->
+
+<!-- 어노테이션과 xml 설정을 같이 사용하기 위한 태그 설정 -->
+<context:annotation-config/>
+
+<!-- 객체를 자동생성해주는 패키지를 등록 -->
+<context:component-scan base-package="repository"/>
+
+<!-- ItemDAO 클래스의 bean 만들기 
+<bean id="itemDAO" class="repository.ItemDAO" />
+<bean id="itemDAO" class="repository.ItemDAO" p:name-ref="string"/>-->
+
+
+
+	<!-- name 프로퍼티에 string 이라는 아이디를 가진 bean을 할당 
+	<property name="name">
+		<ref bean="string"/>
+	</property>-->
+	
+	<!-- name 프로퍼티에 홍시라는 값을 할당 
+	<property name="name" value="홍시"/>-->
+	
+</beans>
