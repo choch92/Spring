@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<!-- Hibernate 설정 파일은 연동할 테이블과 DTO 클래스의 매핑을 설정합니다. -->
+<!-- 테이블과 DTO 설정 -->
+<hibernate-mapping package="naver.choch92.domain">
+	<class name="Item" table="Item">
+		<!-- 기본키 매핑 -->
+		<id name="code" column="code"/>
+		<!-- 나머지 속성 매핑 -->
+		<property name="name" column="name"/>
+		<property name="manufacture" column="manufacture"/>
+		<property name="price" column="price"/>
+	</class>
+</hibernate-mapping>
