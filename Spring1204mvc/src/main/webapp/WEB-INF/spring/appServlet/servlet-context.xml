@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/mvc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+
+	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
+	
+	<!-- 50여가지의 설정을 대신해주는 태그 -->
+	<annotation-driven />
+
+	<!-- java 나 html이 아닌 외부자원들을 저장하는 디렉토리 인데 이 디렉토리에 저장된 자원은 
+	웹 애플리케이션이 시작할 때 메모리에 로드를 하고 링크를 작성할 때 mapping에 있는 url을 포함해서 설정-->
+	<resources mapping="/resources/**" location="/resources/" />
+
+	<!-- Controller에서 리턴한 뷰 이름의 앞과 뒤에 붙여서 실제 출력할 뷰 파일의 이름을 생성 -->
+	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<beans:property name="prefix" value="/WEB-INF/views/" />
+		<beans:property name="suffix" value=".jsp" />
+	</beans:bean>
+	
+	<!-- 어노테이션이 붙은 클래스의 bean을 자동 생성해주는 패키지를 등록 -->
+	<context:component-scan base-package="naver.choch92.springmvc" />
+
+	<!-- Controller가 처리하지 않는 요청은 WAS가 처리하도록 하는 설정 -->
+	<default-servlet-handler/>
+
+</beans:beans>
