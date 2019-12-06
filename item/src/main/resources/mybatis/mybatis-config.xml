@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<!-- 1. MyBatis 환경 설정 파일에 DTO 패키지 등록 -->
+<configuration>
+	<typeAliases>
+		<package name="naver.choch92.item.domain"/>
+	</typeAliases>
+</configuration>
