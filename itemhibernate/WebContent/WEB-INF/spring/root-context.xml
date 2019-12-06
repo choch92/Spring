@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+	xsi:schemaLocation="http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-4.3.xsd
+		http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
+
+	<!-- 모든 곳에서 사용할 수 있는 설정을 작성 -->
+	<!-- 여기에 주로 작성하는 내용은 데이터베이스 관련된 설정 -->
+	<!-- 연결할 데이터베이스와 데이터베이스를 사용할 프레임워크의 bean -->
+
+	<!-- 스프링에서 데이터베이스 사용할 때 필수적으로 설정 -->
+	<!-- 스프링은 데이터베이스 연결 및 트랜잭션 관리를 스프링이 합니다. -->
+	<!-- 데이터베이스 접속 정보를 저장한 DataSource -->
+	<bean
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource"
+		id="dataSource">
+		<!-- 사용할 데이터베이스 종류 -->
+		<property name="driverClassName"
+			value="com.mysql.jdbc.Driver" />
+
+		<!-- 접속할 데이터베이스 경로 -->
+		<property name="url"
+			value="jdbc:mysql://localhost:3306/mysql?useUnicode=yes&amp;characterEncoding=utf-8&amp;useSSL=false&amp;serverTimezone=UTC" />
+		<!-- 접속할 계정 이름 -->
+		<property name="username" value="root" />
+		<!-- 접속할 계정 비번 -->
+		<property name="password" value="92whckdgns!" />
+	</bean>
+
+	<!-- MyBatis 설정 정보를 갖는 Bean -->
+	<bean id="sqlSessionFactory"
+		class="org.mybatis.spring.SqlSessionFactoryBean">
+		<!-- 연결할 데이터베이스 정보 -->
+		<property name="dataSource" ref="dataSource" />
+		<!-- 설정 파일 -->
+		<property name="configLocation"
+			value="classpath:mybatis/mybatis-config.xml" />
+		<!-- 매퍼 파일 설정인데 **/는 모든 디렉토리, *.xml은 모든 xml파일을 의미합니다. -->
+		<!-- 여러 개의 파일이 있을 때 묶어서 이렇게 설정 -->
+		<property name="mapperLocations"
+			value="classpath:mybatis/mappers/**/*.xml" />
+	</bean>
+
+	<!-- MyBatis 설정 정보를 이용해서 실제 MyBatis를 사용할 수 있도록 해주는 bean -->
+	<!-- 이 Bean을 SqlSession 자료형으로 주입받아서 사용합니다. -->
+	<bean id="sqlSession"
+		class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg index="0" ref="sqlSessionFactory" />
+	</bean>
+
+	<!-- MyBatis 설정 : 인터페이스 이용 -->
+	<bean id="sqlSessionFactory1"
+		class="org.mybatis.spring.SqlSessionFactoryBean">
+		<!-- 연결할 데이터베이스 정보 -->
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<bean id="itemMapper"
+		class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="mapperInterface"
+			value="naver.choch92.item.dao.GoodMapper" />
+		<property name="sqlSessionFactory" ref="sqlSessionFactory1" />
+	</bean>
+
+	<!-- 하이버네이트 사용을 위한 bean 생성 -->
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+		<!-- 사용할 데이터 베이스 종류 -->
+		<property name="hibernateProperties">
+			<value>
+				hibernate.dialect=org.hibernate.dialect.MySQLDialect
+			</value>
+		</property>
+		<!-- 데이터베이스 접속 정보 등록 -->
+		<property name="dataSource" ref="dataSource" />
+		<property name="mappingResources">
+			<list>
+				<value>naver/choch92/item/dao/item.hbm.xml</value>
+			</list>
+		</property>
+	</bean>
+
+
+</beans>

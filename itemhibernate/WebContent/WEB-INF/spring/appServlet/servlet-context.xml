@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans
+	xmlns="http://www.springframework.org/schema/mvc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
+
+	<!-- Spring MVC 설정을 해주는 어노테이션으로 필수 -->
+	<annotation-driven />
+
+	<!-- JAVA 와 JSP, HTML을 제외한 파일을 location에 저장하면 애플리케이션이 시작할 때 메모리에 캐싱하고 URL은 
+		mapping에 있는 형태로 지정, 생략 가능 -->
+	<resources mapping="/resources/**" location="/resources/" />
+
+	<!-- Controller에서 리턴한 뷰 이름을 가지고 prefix를 앞에 suffix를 뒤에 붙여서 실제 뷰 파일의 경로를 생성하는 
+		설정, 변경 가능합니다. -->
+	<!-- redirect 되거나 절대 경로는 이 설정을 적용하지 않습니다. -->
+	<beans:bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<beans:property name="prefix" value="/WEB-INF/views/" />
+		<beans:property name="suffix" value=".jsp" />
+	</beans:bean>
+
+	<!-- 어노테이션이 붙은 클래스의 객체를 자동으로 생성해주는 패키지를 설정 -->
+	<context:component-scan
+		base-package="naver.choch92.item" />
+
+	<!-- Controller가 처리하지 못하는 요청은 WAS가 처리하도록 설정, 필수 설정 내용 -->
+	<default-servlet-handler />
+
+	<!-- 트랜잭션을 어노테이션으로 사용할 수 있도록 해주는 설정 -->
+	<tx:annotation-driven />
+	<!-- 트랜잭션 매니저를 생성 -->
+	<beans:bean id="transactionManager"
+		class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+		<beans:property name="sessionFactory"
+			ref="sessionFactory" />
+	</beans:bean>
+
+</beans:beans>

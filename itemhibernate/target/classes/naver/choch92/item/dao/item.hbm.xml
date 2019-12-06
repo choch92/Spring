@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<!-- 연동할 DTO 클래스의 패키지를 등록 -->
+<hibernate-mapping package="naver.choch92.item.domain">
+	<!-- 클래스와 테이블을 매핑 -->
+	<class name="Item" table="ITEM">
+		<id name="itemid" column="itemid"/>
+		<property name="itemname" column="itemname"/>
+		<property name="price" column="price"/>
+		<property name="pictureurl" column="pictureurl"/>
+		<property name="description" column="description"/>
+	</class>
+</hibernate-mapping>
