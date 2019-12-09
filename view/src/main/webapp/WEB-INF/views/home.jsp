@@ -7,6 +7,37 @@
 <title>다양한 뷰 출력</title>
 </head>
 <body>
-	<a href="fileview">파일 목록 보기</a><br/>
+	<div>
+		<h2>다양한 뷰 출력해보기</h2>
+		<table border="5" bordercolor="silver" cellpadding="3px">
+		<tr bgcolor="skyblue">
+				<td width="200">파일출력방식들</td>
+		</tr>
+		<tr>
+			<td><a href="fileview" target="test">파일 목록 보기</a></td>
+		</tr>
+		<tr>
+			<td><a href="./excel.xls" target="test" >엑셀 파일 다운로드</a></td>
+		</tr>
+		<tr>
+			<td><a href="./oop.pdf" target="test" >PDF 파일 다운로드</a></td>
+		</tr>
+		<tr>
+			<td><a href="./view.json" target="test" >view를 이용한 JSON 다운로드</a></td>
+		</tr>
+		<tr>
+			<td><a href="./rest.csv" target="test" >CSV 다운로드(RestController)</a></td>
+		</tr>
+		<tr>
+			<td><a href="./rest.json" target="test" >JSON 다운로드(RestController)</a></td>
+		</tr>
+		<tr>
+			<td><a href="./book.xml">XML 다운로드</a></td>
+		</tr>
+		</table>
+	</div>
+	
+	<iframe width="100%" height="600" name="test" id="test" frameborder="1" 
+	scrolling="yes" align="left"></iframe>
 </body>
 </html>

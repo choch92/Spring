@@ -16,15 +16,20 @@
 			<tr bgcolor="skyblue">
 				<th width="200">파일이름</th>
 			</tr>
-			<c:forEach var="name" items="${list}">
+			<c:forEach var="name" items="${dlist}">
 				<tr bgcolor="papayawhip">
-					<td><a href="./download?filename=${name}">${name}</a></td>
+					<td><a href="directList?direct=${name}">${name}</a></td>
+				</tr>
+			</c:forEach>
+			<c:forEach var="name" items="${flist}">
+				<tr bgcolor="papayawhip">
+				    <td><a href="./download?filename=${name}">${name}</a></td>
 				</tr>
 			</c:forEach>
 		</table>
 	</div>
 </body>
 <script>
-	
 </script>
 </html>
+

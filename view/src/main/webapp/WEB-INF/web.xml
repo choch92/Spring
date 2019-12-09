@@ -1,21 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Dynamic Web Module 설정 : 서블릿 설정 -->
+<!-- 다른 곳에서 작업한 프로젝트를 열었는데 Dynamic Web Module 에러가 발생하면 이부분을 project factes에 
+	맞게 수정하면 됩니다. 서블릿 ? DTD 로 검색 -->
 <web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee https://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
 
-	<!-- The definition of the Root Spring Container shared by all Servlets 
-		and Filters -->
+	<!-- Listener 와 context param이 한 쌍 모든 곳에서 공통으로 사용할 설정을 작성하는 파일의 경로 데이터베이스 
+		설정을 이 파일에 합니다. -->
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>/WEB-INF/spring/root-context.xml</param-value>
 	</context-param>
 
-	<!-- Creates the Spring Container shared by all Servlets and Filters -->
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
 
-	<!-- Processes application requests -->
+	<!-- servlet 과 servlet-mapping이 한 쌍 url - pattern에 해당하는 요청이 왔을 때 사용할 설정을 
+		작성하는 파일의 위치 -->
 	<servlet>
 		<servlet-name>appServlet</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
@@ -46,12 +49,14 @@
 		<filter-name>encodingFilter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
+	
 	<!-- 시작 페이지 설정 -->
 	<welcome-file-list>
 		<welcome-file>index.html</welcome-file>
 		<welcome-file>index.htm</welcome-file>
 		<welcome-file>index.jsp</welcome-file>
 	</welcome-file-list>
+	
 	<!-- 에러 페이지 설정 -->
 	<error-page>
 		<error-code>404</error-code>
