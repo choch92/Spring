@@ -8,20 +8,29 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.UUID;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import naver.choch92.view.domain.Birth;
 import naver.choch92.view.domain.Book;
 import naver.choch92.view.domain.BookReport;
+import naver.choch92.view.domain.Member;
 import naver.choch92.view.service.ViewService;
+import naver.choch92.view.validator.BirthValidator;
+import naver.choch92.view.validator.MemberValidator;
 
 @Controller
 public class HomeController {
@@ -150,6 +159,73 @@ public class HomeController {
 	public String exception(Model model) {
 		model.addAttribute("msg", "빠른 시간에 처리하겠습니다.");
 		return "error/exception";
+	}
+	
+	// 단순 페이지 이동의 경우는 매개변수(Model mode)없이 포워딩할 페이지 이름만 리턴하면됨
+	@RequestMapping(value = "login", method=RequestMethod.GET)
+	public String login() {
+		return "login";
+	}
+	// join 요청이 GET 방식으로 온 경우 처리
+	// Spring 유효성 검사를 사용하는 경우에는 DTO 객체를 매개변수로 생성
+	// Member 객체가 넘어갈때 command라는 이름으로 넘어갑니다.
+	@RequestMapping(value="join", method=RequestMethod.GET)
+	public String join(@ModelAttribute("command") Member member) {
+		return "join";
+	}
+	
+	// join 요청을 POST 방식으로 요청했을 때 호출되는 메소드
+	// form의 데이터를 전송할 때는 BindingResult를 만들어서 유효성 검사의 결과를 저장하도록 합니다.
+	@RequestMapping(value="join", method=RequestMethod.POST)
+	public String join(@ModelAttribute("command") Member member, BindingResult result) {
+		// 유효성 검사를 수행
+		// member를 가지고 유효성 검사를 해서 결과를 result에 저장
+		new MemberValidator().validate(member, result);
+		// 유효성 검사를 통과하지 못한 경우
+		if(result.hasErrors()) {
+			return "join";
+		}
+		return "joincomplete";
+	}
+	// birth 요청이 GET 방식으로 온 경우 처리
+	@RequestMapping(value="birth", method=RequestMethod.GET)
+	public String birth(@ModelAttribute("command") Birth birth) {
+		return "birth";
+	}
+	// birth 요청이 POST 방식으로 온 경우 처리
+	@RequestMapping(value="birth", method=RequestMethod.POST)
+	public String birth(@ModelAttribute("command") Birth birth, BindingResult result) {
+		new BirthValidator().validate(birth, result);
+		if(result.hasErrors()) {
+			return "birth";
+		}
+		return "birthcomplete";
+	}
+	
+	// fileupload 요청이 GET 방식으로 온 경우 처리
+	@RequestMapping(value="fileupload", method=RequestMethod.GET)
+	public String fileupload() {
+		return "fileupload";
+	}
+	// fileupload 요청이 POST 방식으로 온 경우 처리
+	@RequestMapping(value="upload", method=RequestMethod.POST)
+	// MultipartHttpServletRequest를 이용하는 방법
+	public String upload(MultipartHttpServletRequest request) {
+		// file 파라미터의 데이터 가져오기
+		MultipartFile file = request.getFile("file");
+		// 파일 업로드 : 문서 디렉토리
+		String filepath = "C:\\Users\\a\\Desktop\\practice\\";
+		// 저장 경로와 원래의 파일 이름을 결합
+		// 파일 이름의 중복을 제거하기 위해서 랜덤한 문자열을 추가(UUID.randomUUID().toString())
+		filepath = filepath + 
+				UUID.randomUUID().toString() + file.getOriginalFilename();
+		try {
+			// 파일 업로드
+			file.transferTo(new File(filepath));
+		}catch(Exception e) {
+			System.err.println(e.getMessage());
+		}
+		return "complete";
 	}
 
 }

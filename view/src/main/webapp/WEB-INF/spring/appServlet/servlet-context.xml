@@ -28,7 +28,6 @@
 		<beans:property name="order" value="0" />
 	</beans:bean>
 
-
 	<beans:bean id="download"
 		class="naver.choch92.view.view.DownloadView" />
 
@@ -59,6 +58,23 @@
 		class="org.springframework.web.servlet.view.xml.MarshallingView">
 		<beans:property name="marshaller" ref="marshaller" />
 		<beans:property name="modelKey" value="list" />
+	</beans:bean>
+
+	<!-- 프로퍼티 파일 설정 -->
+	<beans:bean id="messageSource"
+		class="org.springframework.context.support.ResourceBundleMessageSource">
+		<beans:property name="basenames">
+			<beans:list>
+				<beans:value>message/label</beans:value>
+				<beans:value>message/errors</beans:value>
+				<beans:value>message/birth</beans:value>
+			</beans:list>
+		</beans:property>
+	</beans:bean>
+
+	<!-- 파일 업로드 처리를 위한 Bean -->
+	<beans:bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 	</beans:bean>
 
 	<!-- 어노테이션이 붙은 클래스의 bean을 자동으로 생성해주는 패키지 설정 모든 클래스는 이 패키지 안에 만드는 것을 권장 -->
