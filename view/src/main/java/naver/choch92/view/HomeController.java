@@ -227,5 +227,17 @@ public class HomeController {
 		}
 		return "complete";
 	}
+	
+	// echo 요청이 GET 방식으로 온 경우 처리
+	@RequestMapping(value="echo", method=RequestMethod.GET)
+	public String echo() {
+		return "echo";
+	}
+	
+	// chat 요청이 GET 방식으로 온 경우 처리
+	@RequestMapping(value="chat", method=RequestMethod.GET)
+	public String chat() {
+		return "chat";
+	}
 
 }
