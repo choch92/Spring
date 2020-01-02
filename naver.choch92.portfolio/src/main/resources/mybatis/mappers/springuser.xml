@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="springuser">
+
+	<!-- email 중복검사를 위한 SQL -->
+	<select id="emailcheck" resultType="java.lang.String" parameterType="java.lang.String">
+		select email
+		from springuser
+		where email = #{email}
+	</select>
+	
+	<!-- nickname 중복검사를 위한 SQL -->
+	<select id="nicknamecheck" resultType="java.lang.String" parameterType="java.lang.String">
+		select nickname
+		from springuser
+		where nickname = #{nickname}
+	</select>
+
+	<!-- 회원 가입 처리를 위한 SQL : 삽입 -->
+	<select id="join" parameterType="SpringUser">
+		insert into springuser(email, pw, name, nickname, gender, image, phone, hobby, birthday)
+		values(#{email}, #{pw}, #{name}, #{nickname}, #{gender}, #{image}, #{phone}, #{hobby}, #{birthday})	
+	</select>
+	
+	<!-- springuser 테이블에서 email을 가지고 모든 정보를 찾아오는 SQL -->
+	<select id="login" resultType="SpringUser" parameterType="java.lang.String">
+		select *
+		from springuser
+		where email = #{email}
+	</select>
+	
+	<!-- 회원정보 수정 처리를 위한 sql -->
+	<update id="update" parameterType="SpringUser">
+		update springuser
+		set pw = #{pw}, nickname = #{nickname}, image = #{image}
+		where email = #{email}
+	</update>
+	
+	<!-- 회원탈퇴 처리를 위한 sql -->
+	<delete id="delete" parameterType="java.lang.String">
+		delete from springuser
+		where email = #{email}
+	</delete>
+</mapper>

@@ -1,0 +1,15 @@
+tr.header {
+	background: papayawhip;
+}
+
+tr.record {
+	background: #EDEDED;
+}
+
+div.body {
+	overflow-y: auto;
+	scrollbar-face-color: #C9BFED;
+	scrollbar-shadow-color: #EDEDED;
+	margin-top: 50px;
+	margin-bottom: 50px;
+}
