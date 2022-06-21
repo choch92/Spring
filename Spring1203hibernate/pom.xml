@@ -65,7 +65,7 @@
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
-			<version>6.0.5</version>
+			<version>8.0.28</version>
 		</dependency>
 
 		<!-- Spring에서 데이터 베이스 사용할 때 필수 -->
