@@ -15,7 +15,7 @@
 		<!-- 자바 버전을 설정하기 위한 태그 -->
 		<java-version>1.8</java-version>
 		<!-- 스프링 버전을 설정하기 위한 태그 -->
-		<org.springframework-version>5.0.7.RELEASE</org.springframework-version>
+		<org.springframework-version>5.2.20.RELEASE</org.springframework-version>
 		<org.aspectj-version>1.6.10</org.aspectj-version>
 		<org.slf4j-version>1.6.6</org.slf4j-version>
 	</properties>
